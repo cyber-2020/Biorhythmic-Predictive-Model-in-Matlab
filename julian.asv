@@ -1,0 +1,32 @@
+function[julian_day] = julian(date)
+%This function calculates the number of days since a certain date, if 
+%a matrix is passed to this function, it will return a julian day vector.
+%Belormula for determining the julian day number:
+%julian_day = 1721060 + 365*y + 31*(m-1) + d + floor(yp/4) - floor(yp/100) + floor(yp/400) - x;
+
+y=date(:,1);   %assigning the 1st value of date to y(year)
+m=date(:,2);   %assigning the 2nd value of date to m(month)
+d=date(:,3);   %assigning the 3rd value of date to d(day)
+
+julian_day = [];     %need julian_day ow assign an empty matrix for the 
+                     %1st value of julian day 1 time only during the 1st
+                     %for loop check, example: a=[a,a] to create a vector
+[r,c]=size(m);
+for k=1:r
+    
+    if m(r)<=2
+        x=0;      %necessary value for x if m<=2
+        yp=y-1;   %necessary value for yp if m<=2
+                  %reference: yp is used in place of y' to improve readability
+    else
+        x=(.9*m + 2.3);  %necessary value for x if m>2
+        yp=y;            %necessary value for yp if m>2
+    end   %end statement of "if m(q)<=2"
+
+    julian_formula = 1721060 + 365*y(k) + 31*(m(k)-1) + d(k) + floor(yp(k)/4) - floor(yp(k)/100) + floor(yp(k)/400) - x;
+    julian_day = [julian_day,julian_formula];
+    
+end   %end statement of "for k=1:q"
+
+
+
